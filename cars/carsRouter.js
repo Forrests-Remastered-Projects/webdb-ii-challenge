@@ -36,4 +36,27 @@ router.post("/", (req, res) => {
         .json({ error: "Error inserting car", message: err.message });
     });
 });
+router.put("/:id", (req, res) => {
+  db("cars")
+    .where({ id: req.params.id })
+    .update(req.body)
+    .then(count => {
+      res.status(200).json(count);
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+});
+
+router.delete("/:id", (req, res) => {
+  db("cars")
+    .where({ id: req.params.id })
+    .del()
+    .then(count => {
+      res.status(200).json(count);
+    })
+    .catch(error => {
+      res.status(500).json(error);
+    });
+});
 module.exports = router;
